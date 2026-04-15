@@ -44,6 +44,10 @@
             <id>nexus-releases</id>
             <url>http://localhost:8082/repository/maven-releases/</url>
         </repository>
+        <repository>
+            <id>local</id>
+            <url>file://${user.home}/.m2/repository</url>
+        </repository>
     </repositories>
 
     <build>
@@ -51,8 +55,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <classifier>exec</classifier>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
