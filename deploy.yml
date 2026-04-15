@@ -1,0 +1,31 @@
+---
+- name: Deploy task-api
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Pull task-api image
+      docker_image:
+        name: mulhomabiala/task-api:latest
+        source: pull
+
+    - name: Run task-api container
+      docker_container:
+        name: task-api
+        image: mulhomabiala/task-api:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "8085:8085"
